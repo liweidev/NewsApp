@@ -65,4 +65,17 @@ public abstract class ParentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 所有activity跳转界面都使用此方法
+     * @param isFinish
+     */
+    public void startActivity(Activity activity,Intent intent,boolean isFinish){
+        startActivity(intent);
+        startActivityWithAnimation();
+        if(isFinish){
+            activity.finish();
+            ActivityUtils.removeActivity(activity);
+        }
+    }
+
 }

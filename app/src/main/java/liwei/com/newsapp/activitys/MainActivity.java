@@ -106,7 +106,14 @@ public class MainActivity extends ParentActivity implements View.OnClickListener
 
     @Override
     public void initData() {
-
+        if(!NetUtils.isNetAvailable()){
+            tvNoNet.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        }else{
+            tvNoNet.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            sendRequestWithHotSports();
+        }
     }
 
     /**
@@ -148,14 +155,7 @@ public class MainActivity extends ParentActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        if(!NetUtils.isNetAvailable()){
-            tvNoNet.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.INVISIBLE);
-        }else{
-            tvNoNet.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            sendRequestWithHotSports();
-        }
+
     }
 
     @Override

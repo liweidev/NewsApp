@@ -1,5 +1,6 @@
 package liwei.com.newsapp.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class QueryEntity extends ParentEntity {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable{
         /**
          * title : ﻿足球赌博判刑:NBA-太阳6人上双遭逆转 四巨头103分勇士四连胜
          * content : 李牧羊无视那些议论攻击他的路人们,猛然转身看向木鼎一,说道:"不过,我又能理解你。毕竟,你的儿子--亲生儿子,应当是亲生的吧?"   中国警察网官方微信:扫一扫,免费订阅! 最权威、最及时、最全面的公安新闻发布平台。 精彩的警察故事,靓丽的警花警草,靠谱的预警知识…实乃广大...

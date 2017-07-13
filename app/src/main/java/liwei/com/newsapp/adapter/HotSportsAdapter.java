@@ -1,6 +1,7 @@
 package liwei.com.newsapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import liwei.com.newsapp.R;
+import liwei.com.newsapp.activitys.MainActivity;
+import liwei.com.newsapp.activitys.ShowActivity;
 import liwei.com.newsapp.constant.Constant;
 import liwei.com.newsapp.entity.QueryEntity;
 import liwei.com.newsapp.utils.DialogUtils;
@@ -46,6 +49,7 @@ public class HotSportsAdapter extends RecyclerView.Adapter<HotSportsAdapter.View
             }
         }
     };
+    private List<QueryEntity.ResultBean> results;
 
     public HotSportsAdapter(Context mContext, List<String> stringList) {
         this.mContext = mContext;
@@ -65,7 +69,16 @@ public class HotSportsAdapter extends RecyclerView.Adapter<HotSportsAdapter.View
         holder.newsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getData(title);
+                if(results!=null){
+                    QueryEntity.ResultBean resultBean = results.get(position);
+                    Intent intent=new Intent(mContext, ShowActivity.class);
+                    intent.putExtra("data",resultBean);
+                    if(mContext instanceof MainActivity){
+                        ((MainActivity) mContext).startActivity((MainActivity) mContext,intent,false);
+                    }
+                }else {
+                    getData(title);
+                }
             }
         });
     }
@@ -92,7 +105,7 @@ public class HotSportsAdapter extends RecyclerView.Adapter<HotSportsAdapter.View
                 String string = response.body().string();
                 QueryEntity queryEntity = GsonUtils.fromJson(string, QueryEntity.class);
                 if (null != queryEntity && queryEntity.getError_code() == 0 && queryEntity.getResult().size() > 0) {
-                    List<QueryEntity.ResultBean> results = queryEntity.getResult();
+                    results = queryEntity.getResult();
                     stringList.clear();
                     for (QueryEntity.ResultBean resultBean : results) {
                         stringList.add(resultBean.getTitle());
